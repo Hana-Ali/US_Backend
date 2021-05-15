@@ -2,6 +2,8 @@
 
 // Express
 const express = require('express');
+// Cors
+const cors = require('cors');
 // Express file reader
 const expressFormData = require('express-form-data');
 // Dotenv
@@ -32,8 +34,11 @@ server.use(express.urlencoded({ extended: false }));
 server.use(express.json());
 // Configure server to read form data, or files
 server.use(expressFormData.parse());
-// Configure server to be able to serve public files
-server.use(express.static("public"));
+// Allow Cross-Origin Resource Sharing
+server.use(cors());
+
+/*// Configure server to be able to serve public files
+server.use(express.static("public"));*/
 
 // MongoDB connection string
 const connectionString = process.env.DB_CONNECTION_STRING;
