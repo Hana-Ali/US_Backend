@@ -39,6 +39,10 @@ const UsersSchema = mongoose.Schema(
         // Avatar isn't required
         avatar: {
             type: String
+        },
+        dataCreated: {
+            type: Date,
+            default: Date.now
         }
     }
 );
