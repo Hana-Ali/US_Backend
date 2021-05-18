@@ -29,7 +29,7 @@ const UsersSchema = mongoose.Schema(
         },
         // Phone number is required, so buyers can contact sellers and vice versa
         phoneNumber: {
-            type: Number,
+            type: String,
             required: true
         },
         // Address isn't required
