@@ -15,7 +15,7 @@ const cloudinary = require('cloudinary');
 // User routes, redirects any http://myapp.com/user requests
 const usersRoutes = require('./routes/user');
 // Product routes, redirects any http://myapp.com/product requests
-const productRoutes = require('./routes/products');
+const productsRoutes = require('./routes/products');
 // Passport for login authentication
 const passport = require('passport');
 // PassportJWT strategy and Extraction 
@@ -115,7 +115,7 @@ passportJwt(passport);
 server.get(
     '/',
     (req, res) => {
-        res.sendFile(__dirname + '/index.html');
+        res.send("Welcome Home!");
     }
 );
 // Ensuring proper user redirection 
@@ -126,7 +126,7 @@ server.use(
 // Ensuring proper products redirection
 server.use(
     '/product',
-    productRoutes
+    productsRoutes
 );
 
 // Making the general art-gallery route

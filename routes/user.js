@@ -9,9 +9,9 @@ const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET;
 
 // ------------------------------------- Creating a route for user add
-// http://www.myapp.com/user/register
+// http://www.myapp.com/user/add
 router.post(
-    '/register',
+    '/add',
     (req, res) => {
         // (1) Getting the form data from user
         const formData = {
