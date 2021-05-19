@@ -111,7 +111,7 @@ router.post(
 router.post(
     '/update',
     (req, res) => {
-        UserModel
+        UsersModel
         .findOneAndUpdate(
             { email: req.body.email },
             {
