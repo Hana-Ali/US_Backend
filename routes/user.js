@@ -113,10 +113,16 @@ router.post(
     (req, res) => {
         UserModel
         .findOneAndUpdate(
-            { 'firstName': 'John'},
+            { email: req.body.email },
             {
                 $set: {
-                    'firstName':'Jonathan'
+                    "userName": req.body.userName,
+                    "password": req.body.password,
+                    "firstName": req.body.firstName,
+                    "lastName": req.body.lastName,
+                    "phoneNumer": req.body.phoneNumber,
+                    "address": req.body.address,
+                    "avatar": req.body.avatar
                 }
             }
         )
