@@ -43,6 +43,9 @@ const UsersSchema = mongoose.Schema(
         dataCreated: {
             type: Date,
             default: Date.now
+        },
+        productsArray: {
+            type: Array
         }
     }
 );

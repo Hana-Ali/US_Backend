@@ -3,6 +3,7 @@ const { Mongoose } = require('mongoose');
 const router = express.Router();
 const ProductsModel = require('../models/ProductsModel.js');
 const cloudinary = require('cloudinary').v2;
+const UsersModel = require('../models/UsersModel.js');
 
 
 
@@ -43,10 +44,31 @@ router.post(
                     // If works fine, set the newUsersModel avatar to the generated cloudinary url
                     else {
                         newProductsModel.productImage = cloudinaryResult.url
+                        UsersModel
+                            .findOneAndUpdate(
+                                { "userName": formData.associatedUsername },
+                                {
+                                    $push: {
+                                        "productsArray": cloudinaryResult.url
+                                    }
+                                }
+                            )
+                            .then(
+                                (dbDocument) => {
+                                    res.send(dbDocument)
+                                }
+                            )
+                            .catch(
+                                (error) => {
+                                    res.send("error", error)
+                                }
+                            )
                     }
                 }
             );
         }
+
+
 
         newProductsModel
         .save() //  Promise
