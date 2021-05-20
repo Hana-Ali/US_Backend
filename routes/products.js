@@ -24,56 +24,42 @@ router.post(
         // Instantiating an object for this data specifically
         const newProductsModel = new ProductsModel(formData);
 
-        // Check if the username exists
-        ProductsModel
-        .findOne(
-            { userName: formData.associatedUsername }
-        )
-        .then(
-            async (dbDocument) => {
-                if(!dbDocument) {
-                    res.send("Sorry, that account doesn't exist.")
-                }
-                else {
-                    // Create an object which holds the value of the sent user file
-                    const theFiles = Object.values(req.files);
-                    // If user actually sent files, the length of the files would be > 0
-                    // Thus, here we check if any files were sent
-                    if (theFiles.length > 0) {
-                        // Cloudinary upload function
-                        await cloudinary.uploader.upload(
-                            // Path of profile pic, first picture sent
-                            theFiles[0].path,
-                            // Uploading the file to cloudinary
-                            (cloudinaryErr, cloudinaryResult) => {
-                                // If error, send error
-                                if (cloudinaryErr) {
-                                    console.log(cloudinaryErr)
-                                }
-                                // If works fine, set the newUsersModel avatar to the generated cloudinary url
-                                else {
-                                    newProductsModel.productImage = cloudinaryResult.url
-                                }
-                            }
-                        );
+        
+        // Create an object which holds the value of the sent user file
+        const theFiles = Object.values(req.files);
+        // If user actually sent files, the length of the files would be > 0
+        // Thus, here we check if any files were sent
+        if (theFiles.length > 0) {
+            // Cloudinary upload function
+            cloudinary.uploader.upload(
+                // Path of profile pic, first picture sent
+                theFiles[0].path,
+                // Uploading the file to cloudinary
+                (cloudinaryErr, cloudinaryResult) => {
+                    // If error, send error
+                    if (cloudinaryErr) {
+                        console.log(cloudinaryErr)
                     }
-
-                    newProductsModel
-                        .save() //  Promise
-                        .then( //resolved...
-                            (dbDocument) => {
-                                res.send(dbDocument);
-                            }
-                        )
-                        .catch( //rejected...
-                            (error) => {
-                                res.send(error)
-                            }
-                        );
-                    
+                    // If works fine, set the newUsersModel avatar to the generated cloudinary url
+                    else {
+                        newProductsModel.productImage = cloudinaryResult.url
+                    }
                 }
+            );
+        }
+
+        newProductsModel
+        .save() //  Promise
+        .then( //resolved...
+            (dbDocument) => {
+                res.send(dbDocument);
             }
         )
+        .catch( //rejected...
+            (error) => {
+                res.send(error)
+            }
+        );
     }
 );
 

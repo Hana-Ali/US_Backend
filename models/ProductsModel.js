@@ -15,7 +15,7 @@ const ProductsSchema = mongoose.Schema(
         },
         // Price is required 
         price: {
-            type: String,
+            type: Number,
             required: true
         },
         // To match template
@@ -26,7 +26,6 @@ const ProductsSchema = mongoose.Schema(
         // link for image
         productImage: {
             type: String,
-            required: true
         },
         associatedUsername: {
             type: String,
