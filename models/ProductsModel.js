@@ -5,22 +5,30 @@ const mongoose = require('mongoose');
 const ProductsSchema = mongoose.Schema(
     {
         // Name is required 
-        name: {
+        title: {
+            type: String,
+            required: true
+        },
+        description: {
             type: String,
             required: true
         },
         // Price is required 
         price: {
-            type: Number,
+            type: String,
             required: true
         },
-        // Size of drawing is required
-        dimensions: {
-            type: String, // Since it'll probably be AxB
+        // To match template
+        color: {
+            type: String,
             required: true
         },
-        // Type of art (oil on canvas, etc) is required 
-        type: {
+        // link for image
+        productImage: {
+            type: String,
+            required: true
+        },
+        associatedUsername: {
             type: String,
             required: true
         }
