@@ -44,12 +44,17 @@ router.post(
                     // If works fine, set the newUsersModel avatar to the generated cloudinary url
                     else {
                         newProductsModel.productImage = cloudinaryResult.url
+
                         UsersModel
                             .findOneAndUpdate(
                                 { "userName": formData.associatedUsername },
                                 {
                                     $push: {
-                                        "productsArray": cloudinaryResult.url
+                                        "productsArray": {
+                                            "pictureUrl": cloudinaryResult.url,
+                                            "pictureTitle": formData.title,
+                                            "pictureDescription": formData.description
+                                        }
                                     }
                                 }
                             )

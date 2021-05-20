@@ -44,9 +44,11 @@ const UsersSchema = mongoose.Schema(
             type: Date,
             default: Date.now
         },
-        productsArray: {
-            type: Array
-        }
+        productsArray: [{
+            pictureUrl: String,
+            pictureTitle: String,
+            pictureDescription: String
+        }]
     }
 );
 
