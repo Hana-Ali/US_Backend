@@ -111,13 +111,48 @@ router.post(
 router.post(
     '/update',
     (req, res) => {
+
+        let newPassword; 
+
+        bcryptjs.genSalt(
+            (err, theSalt) => {
+                // (6) Hash function for the password
+                bcryptjs.hash(
+                    req.body.password,
+                    theSalt,
+                    (err, hashedPassword) => {
+                        newPassword = hashedPassword;
+
+                        UsersModel
+                        .findOneAndUpdate(
+                            { email: req.body.email },
+                            {
+                                $set: {
+                                    "password": newPassword
+                                }
+                            }
+                        )
+                        .then(
+                            (dbDocument) => {
+                                res.send(dbDocument)
+                            }
+                        )
+                        .catch(
+                            (error) => {
+                                res.send("error", error)
+                            }
+                        )
+                    }
+                );
+            }
+        );
+        
         UsersModel
         .findOneAndUpdate(
             { email: req.body.email },
             {
                 $set: {
                     "userName": req.body.userName,
-                    "password": req.body.password,
                     "firstName": req.body.firstName,
                     "lastName": req.body.lastName,
                     "phoneNumer": req.body.phoneNumber,
@@ -184,7 +219,12 @@ router.post(
                                     payload, 
                                     jwtSecret, 
                                     (err, jsonwebtoken) => {
-                                        res.send(jsonwebtoken);
+                                        res.json({
+                                            userName: dbDocument.userName,
+                                            email: dbDocument.email,
+                                            avatar: dbDocument.avatar,
+                                            jsonwebtoken
+                                        });
                                     }
                                 );
                             }
