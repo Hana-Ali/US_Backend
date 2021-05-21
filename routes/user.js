@@ -157,7 +157,6 @@ router.post(
                     "lastName": req.body.lastName,
                     "phoneNumer": req.body.phoneNumber,
                     "address": req.body.address,
-                    "avatar": req.body.avatar
                 }
             }
         )
@@ -223,6 +222,7 @@ router.post(
                                             userName: dbDocument.userName,
                                             email: dbDocument.email,
                                             avatar: dbDocument.avatar,
+                                            productsArray: dbDocument.productsArray,
                                             jsonwebtoken
                                         });
                                     }
