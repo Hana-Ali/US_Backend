@@ -11,7 +11,7 @@ const UsersModel = require('../models/UsersModel.js');
 // http://www.myapp.com/product/add
 router.post(
     '/add',
-    (req, res) => {
+    async (req, res) => {
 
         // Capture data from client (e.g, Postman or Browser)
         const formData = {
@@ -32,7 +32,7 @@ router.post(
         // Thus, here we check if any files were sent
         if (theFiles.length > 0) {
             // Cloudinary upload function
-            cloudinary.uploader.upload(
+            await cloudinary.uploader.upload(
                 // Path of profile pic, first picture sent
                 theFiles[0].path,
                 // Uploading the file to cloudinary
@@ -148,6 +148,24 @@ router.post(
                 res.send(error);
             }
         )
+    }
+);
+
+router.get(
+    '/',
+    (req, res) => {
+
+        // Use the Mongo Model for Products to find a product
+        ProductsModel
+            .find()
+            // If the item is found in the database...
+            .then(foundProducts => res.json((foundProducts)))
+            // If the item is NOT found in the database...
+            .catch(
+                (error) => {
+                    console.log('mongoose error', error);
+                }
+            );
     }
 );
 
